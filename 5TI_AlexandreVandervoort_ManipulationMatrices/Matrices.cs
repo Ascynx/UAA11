@@ -23,7 +23,11 @@ internal struct Matrices
                     line += ", ";
                 }
             }
-            concat += "\n" + line;
+            if (i != 0)
+            {
+                concat += "\n";
+            }
+            concat += line;
         }
 
         return concat;
