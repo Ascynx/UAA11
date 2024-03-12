@@ -51,7 +51,6 @@ ipch/
 *.opensdf
 *.sdf
 *.cachefile
-.vs/
 
 # Visual Studio profiler
 *.psess
@@ -91,6 +90,7 @@ AppPackages/
 sql/
 *.Cache
 ClientBin/
+.vs/
 [Ss]tyle[Cc]op.*
 ![Ss]tyle[Cc]op.targets
 ~$*
