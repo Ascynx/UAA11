@@ -60,45 +60,44 @@ internal struct Matrices
 
     public double[,] ResousEquationPivotDeGauss(double[,] equations)
     {
-        double[,] resultat = new double[3, 4];
-        if (equations.GetLength(0) != resultat.GetLength(0) || equations.GetLength(1) != resultat.GetLength(1)) {
+        if (equations.GetLength(0) != 3 || equations.GetLength(1) != 4) {
             throw new ArgumentOutOfRangeException(nameof(equations) + "doit être de dimensions x= 3, y = 4");
         }
-        double[,] inter = CloneMatrice(equations);
+        double[,] resultat = CloneMatrice(equations);
 
-
-        //TODO apparement il y a un problème qqpart ici.
         for (int pivot = 0; pivot < resultat.GetLength(0); pivot++)
         {
-            double coeff = inter[pivot, pivot];
+            double coeff = resultat[pivot, pivot];
             if (coeff != 1)
             {
-                for (int j = 0; j < resultat.GetLength(0); j++)
+                for (int j = 0; j < resultat.GetLength(1); j++)
                 {
-                    inter[pivot, j] /= coeff;
+                    if (resultat[pivot, j] != 0)
+                    {
+                        resultat[pivot, j] /= coeff;
+                    }
                 }
             }
 
-            for (int k = pivot; k  < resultat.GetLength(0); k++)
+            for (int k = pivot + 1; k  < resultat.GetLength(0); k++)
             {
-                double val = inter[k, pivot];
+                double val = resultat[k, pivot];
                 bool positif = val > 0;
                 for (int l = 0; l < Math.Abs(val); l++)
                 {
                     for (int m = 0; m < resultat.GetLength(1); m++) {
-                        double valeurPivot = inter[pivot, m];
+                        double valeurPivot = resultat[pivot, m];
                         if (positif)
                         {
-                            inter[k, m] -= valeurPivot;
+                            resultat[k, m] -= valeurPivot;
                         } else
                         {
-                            inter[k,m] += valeurPivot;
+                            resultat[k,m] += valeurPivot;
                         }
                     }
                 }
             }
         }
-
         return resultat;
     }
 }

@@ -23,6 +23,11 @@ internal struct Utils
         return Int32.Parse(QuestionneUtilisateur(question, (str) => Int32.TryParse(str, out int val)));
     }
 
+    public byte QuestionneUtilisateurByte(String question)
+    {
+        return Byte.Parse(QuestionneUtilisateur(question, (str) => Byte.TryParse(str, out byte val)));
+    }
+
     public int QuestionneUtilisateurIntBetween(String question, int min, int max)
     {
         if (min > max)
