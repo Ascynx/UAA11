@@ -7,8 +7,7 @@
             Utils utils = new Utils();
             IPUtils ipUtils = new IPUtils();
 
-            byte[][] adresses = new byte[20][];
-            string[] noms = new string[20];
+            IPUtils.AdresseIP[] adresses = new IPUtils.AdresseIP[20];
 
             Console.WriteLine("Hello, World!");
             ConsoleKey continuer = ConsoleKey.Escape;
@@ -19,10 +18,10 @@
                 ipUtils.LireAdresseIP(ref adresse);
                 string nom = utils.QuestionneUtilisateur("à qui appartient cette adresse?");
 
-                ipUtils.AjouteNom(ref noms, nom);
+                ipUtils.AjouteNom(ref adresses, nom);
                 ipUtils.AjouteAdresseIP(ref adresses, adresse);
 
-                Console.WriteLine(ipUtils.ConcateneTout(adresses, noms));
+                Console.WriteLine(ipUtils.ConcateneTout(adresses));
                 Console.WriteLine("Voulez vous continuer? y: oui, n: non");
                 continuer = Console.ReadKey(true).Key;
                 while (continuer != ConsoleKey.N && continuer != ConsoleKey.Y)

@@ -2,25 +2,30 @@
 {
     internal struct IPUtils
     {
-        public struct IP
+        public struct AdresseIP
         {
             public string nom;
             public byte[] adresse;
-            public IP()
+            public AdresseIP()
             {
                 nom = "";
                 adresse = new byte[4];
             }
+
+            public override string ToString()
+            {
+                return (nom == null ? "INCONNU" : nom) + ": " + (adresse == null ? "0.0.0.0" : ConcateneAdresse(adresse));
+            }
         }
 
-        public bool AjouteAdresseIP(ref byte[][] adresses, byte[] adresseIP)
+        public bool AjouteAdresseIP(ref AdresseIP[] adresses, byte[] adresseIP)
         {
             bool resultat = false;
             for (int i = 0; i < adresses.Length; i++)
             {
-                if (adresses[i] == null)
+                if (AdresseEstVide(adresses[i].adresse))
                 {
-                    adresses[i] = adresseIP;
+                    adresses[i].adresse = adresseIP;
                     resultat = true;
                     break;
                 }
@@ -28,14 +33,14 @@
             return resultat;
         }
 
-        public bool AjouteNom(ref string[] noms, string nom)
+        public bool AjouteNom(ref AdresseIP[] adresses, string nom)
         {
             bool resultat = false;
-            for (int i = 0; i < noms.Length; i++)
+            for (int i = 0; i < adresses.Length; ++i)
             {
-                if (noms[i] == null)
+                if (adresses[i].nom == null)
                 {
-                    noms[i] = nom;
+                    adresses[i].nom = nom;
                     resultat = true;
                     break;
                 }
@@ -43,8 +48,7 @@
             return resultat;
         }
 
-
-        public string ConcateneAdresse(byte[] adresseIP)
+        public static string ConcateneAdresse(byte[] adresseIP)
         {
             if (adresseIP.Length != 4) {
                 throw new ArgumentException("Une Adresse IP est d'une taille de 4, pas plus, pas moins");
@@ -64,39 +68,19 @@
             return adresseStr;
         }
 
-        public string ConcateneTout(byte[][] adresses, string[] noms)
+        public string ConcateneTout(AdresseIP[] adresses)
         {
-            if (adresses.Length != 20 || noms.Length != 20)
+            if (adresses.Length != 20)
             {
-                throw new ArgumentException("La taille est requise d'être de 20.");
+                throw new ArgumentException("Taille d'adresse doit être de 20.");
             }
 
             string concatene = "";
-
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < adresses.Length; i++)
             {
-                string ligne = "";
-                byte[] adresse = adresses[i];
-                string nom = noms[i];
-
-                if (nom == null || nom == "")
-                {
-                    ligne += "INCONNU: ";
-                } else
-                {
-                    ligne += nom + ": ";
-                }
-
-                if (adresse == null)
-                {
-                    ligne += "0.0.0.0";
-                } else
-                {
-                    ligne += ConcateneAdresse(adresse);
-                }
-
-                concatene += ligne;
-                if (i != (20 - 1))
+                AdresseIP ip = adresses[i];
+                concatene += ip.ToString();
+                if (i != (adresses.Length - 1))
                 {
                     concatene += "\n";
                 }
@@ -115,8 +99,23 @@
 
             for (int i = 0; i < 4; i++)
             {
-                adresse[i] = utils.QuestionneUtilisateurByte("Quel est le nombre en " + (i + 1) + (i == 0 ? "ere" : "eme") + " position");
+                adresse[i] = utils.QuestionneUtilisateurByte("Quel est l'ID en " + (i + 1) + (i == 0 ? "ere" : "eme") + " position");
             }
+        }
+
+        public bool AdresseEstVide(byte[] adresse)
+        {
+            bool res = false;
+            for (int i = 0; i < 4; i++)
+            {
+                if (adresse[i] != 0)
+                {
+                    res = true;
+                    break;
+                }
+            }
+
+            return res;
         }
     }
 }
