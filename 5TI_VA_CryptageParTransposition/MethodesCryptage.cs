@@ -52,9 +52,9 @@ namespace _5TI_VA_CryptageParTransposition
         /// <summary>
         /// écrit la clé et la phrase dans la matrice
         /// </summary>
-        /// <param name="cle"></param>
-        /// <param name="phrase"></param>
-        /// <param name="matrice"></param>
+        /// <param name="cle">La clé de cryptage</param>
+        /// <param name="phrase">La phrase à crypter</param>
+        /// <param name="matrice">La matrice où l'on va insérer la clé et la phrase</param>
         public void EcritChainesDansMatrice(string cle, string phrase, ref char[,] matrice)
         {
             for (int i = 0; i < cle.Length; i++)
@@ -73,6 +73,10 @@ namespace _5TI_VA_CryptageParTransposition
             }
         }
 
+        /// <summary>
+        /// Trie la 1ère ligne de la matrice donnée
+        /// </summary>
+        /// <param name="matrice">La matrice à trier</param>
         public void TrieLigne(ref char[,] matrice)
         {
             bool permut = false;
@@ -92,6 +96,11 @@ namespace _5TI_VA_CryptageParTransposition
             } while (permut);
         }
 
+        /// <summary>
+        /// Crée la matrice qui va servir à crypter la matrice principale
+        /// </summary>
+        /// <param name="cle">La clé de cryptage</param>
+        /// <param name="matriceTriee">La matrice de cryptage (outil)</param>
         public void CreeMatriceOutil(string cle, out char[,] matriceTriee)
         {
             matriceTriee = new char[3, cle.Length];
@@ -108,6 +117,11 @@ namespace _5TI_VA_CryptageParTransposition
             }
         }
 
+        /// <summary>
+        /// Reporte l'ordre la matrice outil sur la matrice principale
+        /// </summary>
+        /// <param name="matrice">La matrice principale</param>
+        /// <param name="matriceOutil">La matrice outil</param>
         public void ReporteOrdre(ref char[,] matrice, ref char[,] matriceOutil)
         {
             for (int i = 0; i < matrice.GetLength(1); i++)
@@ -127,6 +141,11 @@ namespace _5TI_VA_CryptageParTransposition
             }
         }
 
+        /// <summary>
+        /// convertit la matrice de cryptage en texte encrypté
+        /// </summary>
+        /// <param name="matrice">La matrice de cryptage</param>
+        /// <returns>La matrice sous forme de texte encrypté</returns>
         public string ConstruitCryptage(char[,] matrice)
         {
             string chaine = "";
